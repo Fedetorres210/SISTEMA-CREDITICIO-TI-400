@@ -6,9 +6,9 @@ import numpy as np
 def sistemaAmericano(monto,interes,plazo):
 
     columns = {"Numero de Cuota":[],"Monto Cuota":[],"Interes":[],"Amortizacion":[],"Monto Deuda":[]}
-    montoCuota = (interes/100)*monto
+    montoCuota = interes*monto
 
-    ultimaCuota = ((interes/100) *monto)+monto
+    ultimaCuota = (interes *monto)+monto
     while plazo > 0:
         if plazo == 1:
             columns["Numero de Cuota"].append(plazo)
@@ -25,11 +25,11 @@ def sistemaAmericano(monto,interes,plazo):
         plazo -= 1
 
     columns["Numero de Cuota"]= columns["Numero de Cuota"][::-1]
-    columns["Numero de Cuota"].append("Totales")
-    columns["Monto Cuota"].append("----")
+    columns["Numero de Cuota"].append(0)
+    columns["Monto Cuota"].append(0)
     columns["Interes"].append(sum(columns["Interes"]))
     columns["Amortizacion"].append(monto)
-    columns["Monto Deuda"].append("----")
+    columns["Monto Deuda"].append(0)
 
 
     df = pd.DataFrame(columns)
@@ -47,7 +47,6 @@ print(sistemaAmericano(1000000,15,5))
 
 def sistemaAleman(v, n, i):
     k = 1
-    i = i/100
     ck = (v)/(n)+i*v
     totalInteres = 0
     totalAmortizacion = 0
@@ -69,11 +68,11 @@ def sistemaAleman(v, n, i):
         totalAmortizacion = totalAmortizacion + vk
        
         index += 1 
-    columns["Numero de Cuota"].append("Totales")
-    columns["Monto Cuota"].append("NaN")
+    columns["Numero de Cuota"].append(0)
+    columns["Monto Cuota"].append(0)
     columns["Interes"].append(totalInteres)
     columns["Amortizacion"].append(totalAmortizacion)
-    columns["Monto Deuda"].append(v)
+    columns["Monto Deuda"].append(0)
 
     df = pd.DataFrame(columns)
     df = df.set_index(df["Numero de Cuota"])
