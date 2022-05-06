@@ -70,7 +70,7 @@ def sistemaAleman(v, n, i):
        
         index += 1 
     columns["Numero de Cuota"].append("Totales")
-    columns["Monto Cuota"].append("----")
+    columns["Monto Cuota"].append("NaN")
     columns["Interes"].append(totalInteres)
     columns["Amortizacion"].append(totalAmortizacion)
     columns["Monto Deuda"].append(v)
@@ -112,8 +112,8 @@ def sistemaFrances(v, n, i):
         #totalAmortizacion = totalAmortizacion + vk
         index +=1
 
-    columns["Numero de Cuota"].append("Totales")
-    columns["Monto Cuota"].append("----")
+    columns["Numero de Cuota"].append(0)
+    columns["Monto Cuota"].append(0)
     columns["Interes"].append(totalInteres)
     columns["Monto Deuda"].append(0)
     columns["Amortizacion"].append(totalAmortizacion)
@@ -122,7 +122,7 @@ def sistemaFrances(v, n, i):
     df = df.set_index(df["Numero de Cuota"])
     df = df.drop(columns="Numero de Cuota")
     
-    return df
+    return df 
 
     
 
