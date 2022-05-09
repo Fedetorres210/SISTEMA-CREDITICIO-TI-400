@@ -69,3 +69,19 @@ def calcularHonorarios(pNum):
     
     honorariosTotales= h1 + h2 + h3 + h4
     return honorariosTotales
+
+def gastosAdmiYForm(valor):
+    valorExtra = 3*valor/100
+    valorFinal = valor + valorExtra
+    return valorFinal
+
+def verificarFiduciario(monto, sBruto1, sBruto2, sLiquido1, sLiquido2, cuota):
+    #Verificación salarios brutos de fiadores
+    sumaSB= sBruto1+sBruto2
+#requisito 1
+    if sumaSB<(monto*0.2):
+        return False
+#requisito 2    
+    if sLiquido1< cuota or sLiquido2 < cuota:
+        return False
+    return True

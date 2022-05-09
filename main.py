@@ -1,6 +1,6 @@
 import streamlit as st
 from calculator import sistemaAleman,sistemaAmericano,sistemaFrances
-from hipotecario import determinarBonoVivienda,montoFinalVivienda,calcularHonorarios, gastosAdmiYForm
+from hipotecario import determinarBonoVivienda,montoFinalVivienda,calcularHonorarios, gastosAdmiYForm, verificarFiduciario
 
 
 pagina = st.sidebar.selectbox("Paginas Disponibles",["Inicio","Calculo de sistemas","otros..."])
@@ -59,16 +59,36 @@ if pagina == "Calculo de sistemas":
         if tipoCredito == "Crédito fiduciario":
             plazoMeses = st.selectbox("Escoja el plazo en meses que desea:",[item for item in range(1,97)])/12
             if tipoMoneda == "Colones":
+                montoVerificacion = monto
+                monto =  monto + calcularHonorarios(monto) + gastosAdmiYForm(monto)
+                tasaInteres = st.selectbox("Escoja el interes Anual que desea en porcentaje:",[item for item in range(2,14)])/100
                 if monto > 40000000:
                     raise ValueError(f"El monto no puede ser mayor a 40 000 000 {tipoMoneda}")
-                tasaInteres = st.selectbox("Escoja el interes Anual que desea en porcentaje:",[item for item in range(7,14)])/100
+
+                amortizacion = sistemaFrances(monto,plazoMeses,tasaInteres)
+                st.dataframe(amortizacion)
+                st.subheader("******* Verificacion de Prestamos********")
+                try:
+                    salarioBruto1 = float(st.text_input(f"Ingrese el monto del salario Bruto 1 en {tipoMoneda}"))
+                    salarioBruto2 = float(st.text_input(f"Ingrese el monto del salario Bruto 2 en  {tipoMoneda}"))
+                    salarioLiquido1 = float(st.text_input(f"Ingrese el monto del salario Liquido 1 en {tipoMoneda}"))
+                    salarioLiquido2 = float(st.text_input(f"Ingrese el monto del salario Liquido 2 en {tipoMoneda}"))
+                except:
+                    raise ValueError("Los Salarios tienen que ser numericos.")
+                if verificarFiduciario(montoVerificacion, salarioBruto1, salarioBruto2, salarioLiquido1, salarioLiquido2,amortizacion["Monto Cuota"][0]):
+                    st.subheader("Felicidades eres apto para el prestamo :D")
+                else:
+                    st.subheader("Lo sentimos pero no eres apto para este prestamo :c")
+                    
+
+                
+                
+                
             else:
                 if monto > 60000:
                     raise ValueError(f"El monto no puede ser mayor a 60 000 {tipoMoneda}")
                 tasaInteres = st.selectbox("Escoja el interes Anual que desea en porcentaje:",[item for item in range(7,12)])/100
 
-            amortizacion = sistemaFrances(monto,plazoMeses,tasaInteres)
-            st.dataframe(amortizacion)
 
 
         
