@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import datetime
 
 def webScrapper(url,selector):
     res = requests.get(url)
@@ -18,7 +19,7 @@ def separadorColumnasYDatos(table):
             data.append(elem.get_text().replace(",","."))
     return columns, data
 
-def separadorData(datos):
+def separadorDataTBP(datos):
     data = []
     index = []
     for elem in datos:
@@ -28,19 +29,71 @@ def separadorData(datos):
         except:
             if elem != '':
                 index.append(elem)
-    return index, data
+    # Eliminacion de los datos del 29 de Febrero             
+    data.pop(59*12)
+    data.pop(59*12)
+    data.pop(59*12)
+    return  data
 
 
 
-def creacionMatriz(data):
+def creacionMatrizTBP(data,columns):
     matrix =  []
-    index = 11
+    index = len(columns)-1
+    hoy = datetime.datetime.now()
+    numero_dia = (hoy - datetime.datetime(hoy.year, 1, 1)).days + 1
     while index < len(data):
-        if len(matrix) >= len(data[4018:])+3:
+        if len(matrix) >= numero_dia:
             break
         matrix.append(data[index])
-        index += 12
-    return matrix
+        index += len(columns)
+    return matrix[-1]
+
+TBIURL = "https://gee.bccr.fi.cr/indicadoreseconomicos/cuadros/frmvercatcuadro.aspx?idioma=1&codcuadro=%2017"
+def encontrarTBP():
+    table = webScrapper("https://gee.bccr.fi.cr/indicadoreseconomicos/cuadros/frmvercatcuadro.aspx?idioma=1&codcuadro=%2017","td.celda17>p")
+    columns, data = separadorColumnasYDatos(table)
+    data = separadorDataTBP(data)
+    return creacionMatrizTBP(data,columns)
+
+
+def separadorDataTED(datos):
+    data = []
+    index = []
+    for elem in datos:
+        try:
+            if float(elem) > 0:
+                data.append(elem)
+        except:
+            if elem != '':
+                index.append(elem)
+    # Eliminacion de los datos del 29 de Febrero             
+    data.pop(359-5)
+    return  data
+
+def creadornMatrizTED(data,columns):
+    matrix =  []
+    index = len(columns)-2
+    hoy = datetime.datetime.now()
+    numero_dia = (hoy - datetime.datetime(hoy.year, 1, 1)).days + 1
+    while index < len(data):
+        if len(matrix) >= numero_dia:
+            break
+        if index >= 6*123:
+            matrix.append(data[index])
+            index += len(columns)
+        else:
+            matrix.append(data[index])
+            index += len(columns)-1
+    return matrix[-1]
 
 
 
+def encontrarTED():
+    table = webScrapper("https://gee.bccr.fi.cr/indicadoreseconomicos/Cuadros/frmVerCatCuadro.aspx?idioma=1&CodCuadro=%203141","p")
+    columns, data = separadorColumnasYDatos(table)
+    data = separadorDataTED(data)
+    return creacionMatrizTBP(data,columns)
+
+
+dolares = requests.get("https://tipodecambio.paginasweb.cr/api").json()["compra"]

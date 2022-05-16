@@ -85,3 +85,6 @@ def verificarFiduciario(monto, sBruto1, sBruto2, sLiquido1, sLiquido2, cuota):
     if sLiquido1< cuota or sLiquido2 < cuota:
         return False
     return True
+
+
+print(gastosAdmiYForm(3339170.20))

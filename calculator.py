@@ -38,8 +38,6 @@ def sistemaAmericano(monto,interes,plazo):
 
     return df   
 
-print(sistemaAmericano(1000000,15,5)) 
-
 
 
 
@@ -63,7 +61,6 @@ def sistemaAleman(v, n, i):
         columns["Monto Deuda"].append(v)
         v = v - vk
         n = n - 1
-        print(v)
         totalInteres = totalInteres + sk
         totalAmortizacion = totalAmortizacion + vk
        
@@ -80,7 +77,6 @@ def sistemaAleman(v, n, i):
 
     return df
 
-print(sistemaAleman(1000000, 5, 15))
 
 
 
@@ -88,7 +84,6 @@ print(sistemaAleman(1000000, 5, 15))
 
 def sistemaFrances(v, n, i):
     k = 1
-    i = i/100
     c =  (v*i)/(1-(1+i)**-n)
     print(c)
     totalInteres = 0
@@ -123,6 +118,4 @@ def sistemaFrances(v, n, i):
     
     return df 
 
-    
 
-print(sistemaFrances(1000000, 5, 15))
