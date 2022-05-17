@@ -1,10 +1,9 @@
 import streamlit as st
-from calculator import sistemaAleman,sistemaAmericano,sistemaFrances
-from hipotecario import determinarBonoVivienda,montoFinalVivienda,calcularHonorarios, gastosAdmiYForm, verificarFiduciario
-from webScrapper import encontrarTED, encontrarTBP,dolares
-from prueba import mandarCorreoElectronico
-import pandas as pd
-import numpy as np
+from backend.sistemas import sistemaAleman,sistemaAmericano,sistemaFrances
+from backend.creditosYBonos import determinarBonoVivienda,montoFinalVivienda,calcularHonorarios, gastosAdmiYForm, verificarFiduciario
+from backend.webScrapper import encontrarTED, encontrarTBP,dolares
+from backend.correoElectronico import mandarCorreoElectronico
+
 
 pagina = st.sidebar.selectbox("Paginas Disponibles",["Inicio","Calculo de sistemas","otros..."])
 
@@ -54,7 +53,6 @@ if pagina == "Calculo de sistemas":
                 monto = st.number_input(f"Ingrese el monto deseado para su prestamo en {tipoMoneda}",0.0,230000.0)
                 monto = monto*dolares
                 interes = (st.number_input("Ingrese su interes anual",0.0,1.5)+ float(encontrarTED()))/100
-                st.text(interes)
                 if tipoCreditoHipotecario == "Vivienda":
                     bonoVivienda = st.checkbox("Desea usted bono vivienda?")
                     if bonoVivienda:
@@ -76,7 +74,6 @@ if pagina == "Calculo de sistemas":
                 monto = st.number_input(f"Ingrese el monto deseado para su prestamo en {tipoMoneda}",0.0,40000000.0)
                 montoVerificacion = monto
                 monto =   gastosAdmiYForm(monto)
-                st.text(monto)
                 tasaInteres = st.number_input("Ingrese su interes anual",0.0,13.0)/100
 
                 amortizacion = sistemaFrances(monto,plazoMeses,tasaInteres)
@@ -195,8 +192,6 @@ if st.sidebar.checkbox("Desea Usted la informacion por correo?"):
             mandarCorreoElectronico(email,"Lo sentimos no cumples los requisitos para obtener el credito :c")
 
         st.sidebar.text("Su Correo ha sido enviado!")
-
-#st.sidebar.download_button("Descargue la informacion del credito:",pd.DataFrame.to_csv(amortizacion["Interes"]))
 
         
 
