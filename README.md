@@ -140,7 +140,7 @@ Debido a esto es necesario utilizar la terminal para instalar con un simple coma
 
 Una vez instalado cada una de las librerias necesarias para este proyecto, procedemos a implementar el siguiente codigo en la terminal.
 
-    $ streamlit run main.py
+    $ streamlit run interfazGrafica.py
 
 Este codigo implementa la libreria de streamlit, lo que abre un puerto local de un sitio web y permite utilizar la interfaz grafica
 <img src = images/streamlit.png width=680>
