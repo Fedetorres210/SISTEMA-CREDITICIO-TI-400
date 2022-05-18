@@ -120,3 +120,29 @@ El sistema debe permitir al usuario el envío de los cálculos de un crédito y 
 ---
 
 ## Proceso de Creacion
+
+
+
+
+
+
+
+## Instalacion
+
+Para poder manejar de forma concreta y correcta este proyecto se necesitan instalar las librerias mencionadas anteriormente en la seccion de [Librerias](#Librerias). 
+
+Debido a esto es necesario utilizar la terminal para instalar con un simple comando todos los requerimientos del archivo [requirements.txt](requirements.txt) que incluye todas las librerias.
+
+    $ pip install -r requirements.txt
+
+
+## Server
+
+Una vez instalado cada una de las librerias necesarias para este proyecto, procedemos a implementar el siguiente codigo en la terminal.
+
+    $ streamlit run main.py
+
+Este codigo implementa la libreria de streamlit, lo que abre un puerto local de un sitio web y permite utilizar la interfaz grafica
+<img src = images/streamlit.png width=680>
+
+<img src = images/localhost.png width=680>

@@ -118,4 +118,3 @@ def sistemaFrances(v, n, i):
     
     return df 
 
-
