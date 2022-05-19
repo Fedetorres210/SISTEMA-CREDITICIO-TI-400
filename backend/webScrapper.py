@@ -93,7 +93,11 @@ def encontrarTED():
     table = webScrapper("https://gee.bccr.fi.cr/indicadoreseconomicos/Cuadros/frmVerCatCuadro.aspx?idioma=1&CodCuadro=%203141","p")
     columns, data = separadorColumnasYDatos(table)
     data = separadorDataTED(data)
-    return creacionMatrizTBP(data,columns)
+    return creadornMatrizTED(data,columns)
+
+
+print(encontrarTBP())
+print(encontrarTED())
 
 
 dolares = requests.get("https://tipodecambio.paginasweb.cr/api").json()["compra"]
